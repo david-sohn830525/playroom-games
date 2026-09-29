@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="Snake, 2048, Orbit을 즐기는 미니멀 게임 공간">
+  <title>PLAYROOM — Enter the flow.</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2308090b'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%235c8dff' stroke-width='4'/%3E%3Ccircle cx='48' cy='32' r='5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="PLAYROOM 홈">PLAYROOM</a>
+    <div class="status"><span></span>3 GAMES · READY</div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">A quiet place to play</p>
+      <h1 id="hero-title">Enter the <em>flow.</em></h1>
+      <p class="hero-copy">생각은 잠시 내려놓고, 한 판에 집중해보세요.</p>
+    </section>
+
+    <section class="game-grid" aria-label="게임 선택">
+      <article class="game-card snake-card" data-game="snake">
+        <div class="card-light"></div>
+        <div class="preview snake-preview" aria-hidden="true">
+          <div class="grid-lines"></div>
+          <div class="snake-path"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <b class="food"></b>
+        </div>
+        <div class="card-meta"><span>01</span><span>ARCADE</span></div>
+        <h2>Snake</h2>
+        <p>길어질수록, 선택은 좁아진다.</p>
+        <button class="play-button" data-open="snake"><span>Play</span><b>↗</b></button>
+      </article>
+
+      <article class="game-card game-2048-card" data-game="2048">
+        <div class="card-light"></div>
+        <div class="preview tile-preview" aria-hidden="true">
+          <div class="mini-tile t2">2</div><div class="mini-tile t4">4</div>
+          <div class="mini-tile t8">8</div><div class="mini-tile t16">16</div>
+          <div class="mini-tile blank"></div><div class="mini-tile t32">32</div>
+          <div class="mini-tile t64">64</div><div class="mini-tile blank"></div>
+        </div>
+        <div class="card-meta"><span>02</span><span>PUZZLE</span></div>
+        <h2>2048</h2>
+        <p>같은 숫자가 만나면, 길이 열린다.</p>
+        <button class="play-button" data-open="2048"><span>Play</span><b>↗</b></button>
+      </article>
+
+      <article class="game-card orbit-card" data-game="orbit">
+        <div class="card-light"></div>
+        <div class="preview orbit-preview" aria-hidden="true">
+          <div class="planet"></div><div class="ring ring-one"></div><div class="ring ring-two"></div>
+          <i class="moon moon-one"></i><i class="moon moon-two"></i>
+        </div>
+        <div class="card-meta"><span>03</span><span>FOCUS</span></div>
+        <h2>Orbit</h2>
+        <p>궤도를 바꾸고, 충돌을 피하라.</p>
+        <button class="play-button" data-open="orbit"><span>Play</span><b>↗</b></button>
+      </article>
+    </section>
+
+    <footer><span>PLAYROOM / 2026</span><span>키보드와 터치 지원</span></footer>
+  </main>
+
+  <dialog id="game-dialog">
+    <div class="dialog-shell">
+      <header class="dialog-head">
+        <div><span id="game-kicker">GAME 01</span><h2 id="game-title">Snake</h2></div>
+        <button id="close-game" class="icon-button" aria-label="게임 닫기">×</button>
+      </header>
+
+      <section id="snake-panel" class="game-panel">
+        <div class="scorebar"><div>SCORE <strong id="snake-score">0</strong></div><div>BEST <strong id="snake-best">0</strong></div></div>
+        <div class="canvas-wrap snake-wrap"><canvas id="snake-canvas" width="520" height="520"></canvas><div class="game-message" id="snake-message"><strong>Snake</strong><span>방향키 또는 WASD로 이동</span><button data-action="snake-start">Start</button></div></div>
+        <div class="dpad" aria-label="Snake 터치 조작"><button data-dir="up">↑</button><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div>
+      </section>
+
+      <section id="2048-panel" class="game-panel">
+        <div class="scorebar"><div>SCORE <strong id="tile-score">0</strong></div><div>BEST <strong id="tile-best">0</strong></div><button class="small-button" data-action="2048-new">New game</button></div>
+        <div class="board-2048" id="board-2048" aria-label="2048 게임판"></div>
+        <p class="hint">방향키 · WASD · 스와이프로 타일 이동</p>
+      </section>
+
+      <section id="orbit-panel" class="game-panel">
+        <div class="scorebar"><div>ENERGY <strong id="orbit-score">0</strong></div><div>BEST <strong id="orbit-best">0</strong></div></div>
+        <div class="canvas-wrap orbit-wrap"><canvas id="orbit-canvas" width="720" height="520"></canvas><div class="game-message" id="orbit-message"><strong>Orbit</strong><span>좌우 키로 궤도를 회전해 충돌을 피하세요</span><button data-action="orbit-start">Launch</button></div></div>
+        <div class="orbit-controls"><button data-orbit="left">Hold left</button><button data-orbit="right">Hold right</button></div>
+      </section>
+    </div>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
+
